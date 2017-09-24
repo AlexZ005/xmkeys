@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 volatile int active;
+QString err;
 
 xmkeys::xmkeys(QWidget *parent) :
     QMainWindow(parent),
@@ -50,6 +51,15 @@ void xmkeys::on_applyButton_clicked()
         process->start(file, arguments);
 
         qDebug() << "binding!";
+        QProcess process2;
+        QString modkey = "133";
+        QString xmodmapgrep = "./xmodmapgrep.sh ";
+        QString xmodmapgrepkey = xmodmapgrep + modkey;
+        process2.start(xmodmapgrepkey);
+        process2.waitForFinished();
+        err = process2.readAllStandardOutput();
+        qDebug() << err;
+
         QProcess::execute("xmodmap -e \"keycode 133 = Pointer_Button1\"");
 
     }
@@ -65,7 +75,10 @@ void xmkeys::on_applyButton_clicked()
         process->start(file, arguments);
 
         qDebug() << "unbinding!";
-        QProcess::execute("xmodmap -e \"keycode 133 = Super_L NoSymbol Super_L\"");
+        QString restoreMap = "xmodmap -e ";
+        QString result = restoreMap + "\"" + err.remove(QRegExp("[\\n\\t\\r]")) + "\"";
+        qDebug() << result;
+        QProcess::execute(result);
 
 
     }
