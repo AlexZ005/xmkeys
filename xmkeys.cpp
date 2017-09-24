@@ -39,15 +39,19 @@ void xmkeys::on_applyButton_clicked()
 
     if(active == 1 && result == 0)
     {
-        qDebug() << "activated!";
+//        qDebug() << "activated!";
 
         QProcess *process = new QProcess(this);
         QString file = "xkbset";
         QStringList arguments;
         arguments << "m";
-        qDebug() << "xkbset m";
+//        qDebug() << "xkbset m";
 
         process->start(file, arguments);
+
+        qDebug() << "binding!";
+        QProcess::execute("xmodmap -e \"keycode 133 = Pointer_Button1\"");
+
     }
     else if (result == 0)
     {
@@ -58,8 +62,12 @@ void xmkeys::on_applyButton_clicked()
         QStringList arguments;
         arguments << "-m";
         qDebug() << "xkbset -m";
-
         process->start(file, arguments);
+
+        qDebug() << "unbinding!";
+        QProcess::execute("xmodmap -e \"keycode 133 = Super_L NoSymbol Super_L\"");
+
+
     }
 
 }
