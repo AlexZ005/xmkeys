@@ -54,6 +54,32 @@
       <string>Activation</string>
      </property>
     </widget>
+    <widget class="QLabel" name="labelActivation_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enable</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>60</y>
+       <width>85</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&amp;Enable</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="keyBindingsBox">
     <property name="geometry">
@@ -111,7 +137,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Apply</string>
+     <string>&amp;Apply</string>
     </property>
    </widget>
    <widget class="QPushButton" name="closeButton">
@@ -124,7 +150,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Close</string>
+     <string>&amp;Close</string>
     </property>
    </widget>
   </widget>
