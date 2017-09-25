@@ -24,6 +24,12 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
+    void on_leftMouseKey_clicked();
+
+    void on_middleMouseKey_clicked();
+
+    void on_rightMouseKey_clicked();
+
 private:
     Ui::xmkeys *ui;
 };

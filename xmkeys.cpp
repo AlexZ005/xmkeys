@@ -4,9 +4,12 @@
 #include <QDir>
 #include <QDebug>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 volatile int active;
 QString err;
+
+
 
 xmkeys::xmkeys(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +27,7 @@ void xmkeys::on_closeButton_clicked()
 {
     QCoreApplication::quit();
 }
+
 
 void xmkeys::on_applyButton_clicked()
 {
@@ -89,11 +93,66 @@ void xmkeys::on_checkBox_toggled(bool checked)
 {
     qDebug() << "activation state changed, state: " << checked;
 
+//    qDebug() << QKeySequence::fromString("SPACE")[0]; // 1
+
+
+
+
     if (checked == true)
     {
         active = 1;
     }
     else
         active = 0;
+
+}
+
+void xmkeys::on_leftMouseKey_clicked()
+{
+    qDebug() << "ouch!";
+
+    qDebug() << "xevcrop";
+    QProcess process3;
+    QString xevcrop = "./xev";
+    process3.start(xevcrop);
+    process3.waitForFinished();
+    err = process3.readAllStandardOutput();
+    qDebug() << err;
+
+    ui->leftMouseKey->setText(err);
+
+}
+
+
+void xmkeys::on_middleMouseKey_clicked()
+{
+    qDebug() << "ouch!";
+
+    qDebug() << "xevcrop";
+    QProcess process4;
+    QString xevcrop2 = "./xev";
+    process4.start(xevcrop2);
+    process4.waitForFinished();
+    err = process4.readAllStandardOutput();
+    qDebug() << err;
+
+    ui->middleMouseKey->setText(err);
+
+}
+
+
+void xmkeys::on_rightMouseKey_clicked()
+{
+    qDebug() << "ouch!";
+
+    qDebug() << "xevcrop";
+    QProcess process5;
+    QString xevcrop3 = "./xev";
+    process5.start(xevcrop3);
+    process5.waitForFinished();
+    err = process5.readAllStandardOutput();
+    qDebug() << err;
+
+    ui->rightMouseKey->setText(err);
 
 }
