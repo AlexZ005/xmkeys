@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 
+#include <QCloseEvent>
+
 volatile int active;
 QString err;
 QString err1;
@@ -15,6 +17,7 @@ QString err3;
 QString modkey1;
 QString modkey2;
 QString modkey3;
+
 
 QString keyCode()
 {
@@ -39,6 +42,20 @@ xmkeys::xmkeys(QWidget *parent) :
 
 xmkeys::~xmkeys()
 {
+    qDebug() << "Cleaning up!";
+    qDebug() << "unbinding!";
+//        QString restoreMap = "xmodmap -e ";
+//        QString result = restoreMap + "\"" + err.remove(QRegExp("[\\n\\t\\r]")) + "\"";
+
+
+    qDebug() << "xmodmap -e " << err1.remove(QRegExp("[\\n\\t\\r]"));
+    qDebug() << "xmodmap -e " << err2.remove(QRegExp("[\\n\\t\\r]"));
+    qDebug() << "xmodmap -e " << err3.remove(QRegExp("[\\n\\t\\r]"));
+    QProcess::execute("xmodmap -e \"" + err1.remove(QRegExp("[\\n\\t\\r]")) + "\"");
+    QProcess::execute("xmodmap -e \"" + err2.remove(QRegExp("[\\n\\t\\r]")) + "\"");
+    QProcess::execute("xmodmap -e \"" + err3.remove(QRegExp("[\\n\\t\\r]")));
+
+
     delete ui;
 }
 
@@ -175,4 +192,15 @@ void xmkeys::on_rightMouseKey_clicked()
 {
     keyCode();
     ui->rightMouseKey->setText(err);
+}
+
+
+
+void xmkeys::on_activationComboBox_activated(const QString &arg1)
+{
+    QMessageBox::information(
+        this,
+        tr("Maping"),
+        tr("CapsLock not yet implemented.") );
+
 }

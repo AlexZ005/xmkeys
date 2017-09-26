@@ -32,3 +32,5 @@ HEADERS += \
 
 FORMS += \
         xmkeys.ui
+
+include(vendor/vendor.pri)

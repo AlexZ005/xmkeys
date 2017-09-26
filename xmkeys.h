@@ -3,6 +3,15 @@
 
 #include <QMainWindow>
 
+extern volatile int active;
+extern QString err;
+extern QString err1;
+extern QString err2;
+extern QString err3;
+extern QString modkey1;
+extern QString modkey2;
+extern QString modkey3;
+
 namespace Ui {
 class xmkeys;
 }
@@ -27,6 +36,8 @@ private slots:
     void on_middleMouseKey_clicked();
 
     void on_rightMouseKey_clicked();
+
+    void on_activationComboBox_activated(const QString &arg1);
 
 private:
     Ui::xmkeys *ui;
