@@ -1,3 +1,3 @@
 #!/bin/sh
-xmodmap -pke | grep $1
+xmodmap -pke | grep " "$1" "
 exit $?

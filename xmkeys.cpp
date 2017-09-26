@@ -8,7 +8,25 @@
 
 volatile int active;
 QString err;
+QString err1;
+QString err2;
+QString err3;
+QString modkey1;
+QString modkey2;
+QString modkey3;
 
+QString keyCode()
+{
+
+    qDebug() << "xevcrop";
+    QProcess process4;
+    QString xevcrop2 = "./xev";
+    process4.start(xevcrop2);
+    process4.waitForFinished();
+    err = process4.readAllStandardOutput();
+    qDebug() << err;
+    return err;
+}
 
 
 xmkeys::xmkeys(QWidget *parent) :
@@ -54,18 +72,40 @@ void xmkeys::on_applyButton_clicked()
 
         process->start(file, arguments);
 
-        qDebug() << "binding!";
+
         QProcess process2;
-        QString modkey = "133";
+        modkey1 = ui->leftMouseKey->text();
+        qDebug() << modkey1;
         QString xmodmapgrep = "./xmodmapgrep.sh ";
-        QString xmodmapgrepkey = xmodmapgrep + modkey;
+        QString xmodmapgrepkey = xmodmapgrep + modkey1;
+
         process2.start(xmodmapgrepkey);
         process2.waitForFinished();
-        err = process2.readAllStandardOutput();
-        qDebug() << err;
+        err1 = process2.readAllStandardOutput();
 
-        QProcess::execute("xmodmap -e \"keycode 133 = Pointer_Button1\"");
 
+        modkey2 = ui->middleMouseKey->text();
+        xmodmapgrepkey = xmodmapgrep + modkey2;
+        process2.start(xmodmapgrepkey);
+        process2.waitForFinished();
+        err2 = process2.readAllStandardOutput();
+
+        modkey3 = ui->rightMouseKey->text();
+        xmodmapgrepkey = xmodmapgrep + modkey3;
+        process2.start(xmodmapgrepkey);
+        process2.waitForFinished();
+        err3 = process2.readAllStandardOutput();
+
+                qDebug() << err1;
+                        qDebug() << err2;
+                                qDebug() << err3;
+       qDebug() << "xmodmap -e " << err1.remove(QRegExp("[\\n\\t\\r]"));
+       qDebug() << "xmodmap -e " << err2.remove(QRegExp("[\\n\\t\\r]"));
+       qDebug() << "xmodmap -e " << err3.remove(QRegExp("[\\n\\t\\r]"));
+
+       QProcess::execute("xmodmap -e \"keycode " + modkey1 + " = Pointer_Button1\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey2 + " = Pointer_Button2\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey3 + " = Pointer_Button3\"");
     }
     else if (result == 0)
     {
@@ -79,10 +119,19 @@ void xmkeys::on_applyButton_clicked()
         process->start(file, arguments);
 
         qDebug() << "unbinding!";
-        QString restoreMap = "xmodmap -e ";
-        QString result = restoreMap + "\"" + err.remove(QRegExp("[\\n\\t\\r]")) + "\"";
-        qDebug() << result;
-        QProcess::execute(result);
+//        QString restoreMap = "xmodmap -e ";
+//        QString result = restoreMap + "\"" + err.remove(QRegExp("[\\n\\t\\r]")) + "\"";
+
+
+        qDebug() << "xmodmap -e " << err1.remove(QRegExp("[\\n\\t\\r]"));
+        qDebug() << "xmodmap -e " << err2.remove(QRegExp("[\\n\\t\\r]"));
+        qDebug() << "xmodmap -e " << err3.remove(QRegExp("[\\n\\t\\r]"));
+        QProcess::execute("xmodmap -e \"" + err1.remove(QRegExp("[\\n\\t\\r]")) + "\"");
+        QProcess::execute("xmodmap -e \"" + err2.remove(QRegExp("[\\n\\t\\r]")) + "\"");
+        QProcess::execute("xmodmap -e \"" + err3.remove(QRegExp("[\\n\\t\\r]")));
+
+//        qDebug() << result;
+//        QProcess::execute(result);
 
 
     }
@@ -109,50 +158,20 @@ void xmkeys::on_checkBox_toggled(bool checked)
 
 void xmkeys::on_leftMouseKey_clicked()
 {
-    qDebug() << "ouch!";
-
-    qDebug() << "xevcrop";
-    QProcess process3;
-    QString xevcrop = "./xev";
-    process3.start(xevcrop);
-    process3.waitForFinished();
-    err = process3.readAllStandardOutput();
-    qDebug() << err;
-
+    keyCode();
     ui->leftMouseKey->setText(err);
-
 }
 
 
 void xmkeys::on_middleMouseKey_clicked()
 {
-    qDebug() << "ouch!";
-
-    qDebug() << "xevcrop";
-    QProcess process4;
-    QString xevcrop2 = "./xev";
-    process4.start(xevcrop2);
-    process4.waitForFinished();
-    err = process4.readAllStandardOutput();
-    qDebug() << err;
-
+    keyCode();
     ui->middleMouseKey->setText(err);
-
 }
 
 
 void xmkeys::on_rightMouseKey_clicked()
 {
-    qDebug() << "ouch!";
-
-    qDebug() << "xevcrop";
-    QProcess process5;
-    QString xevcrop3 = "./xev";
-    process5.start(xevcrop3);
-    process5.waitForFinished();
-    err = process5.readAllStandardOutput();
-    qDebug() << err;
-
+    keyCode();
     ui->rightMouseKey->setText(err);
-
 }
