@@ -2,6 +2,10 @@
 
 xmkeys is a Qt application which maps keyboard keys to mouse buttons.
 
+## Screenshot
+
+![Screenhot](screenshots/xmkeys.png)
+
 ## Getting Started
 
 Binary files could be found in releases.

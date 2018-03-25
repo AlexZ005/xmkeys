@@ -92,25 +92,21 @@ void xmkeys::on_applyButton_clicked()
 
 
         QProcess process2;
+        QProcess process2h;
         modkey1 = ui->leftMouseKey->text();
         qDebug() << modkey1;
-        QString xmodmapgrep = "./xmodmapgrep.sh ";
-        QString xmodmapgrepkey = xmodmapgrep + modkey1;
 
-        process2.start(xmodmapgrepkey);
+        process2.start("sh", QStringList() << "-c" << "xmodmap -pke | grep \" " + modkey1 + " \"");
         process2.waitForFinished();
         err1 = process2.readAllStandardOutput();
 
-
         modkey2 = ui->middleMouseKey->text();
-        xmodmapgrepkey = xmodmapgrep + modkey2;
-        process2.start(xmodmapgrepkey);
+        process2.start("sh", QStringList() << "-c" << "xmodmap -pke | grep \" " + modkey2 + " \"");
         process2.waitForFinished();
         err2 = process2.readAllStandardOutput();
 
         modkey3 = ui->rightMouseKey->text();
-        xmodmapgrepkey = xmodmapgrep + modkey3;
-        process2.start(xmodmapgrepkey);
+        process2.start("sh", QStringList() << "-c" << "xmodmap -pke | grep \" " + modkey3 + " \"");
         process2.waitForFinished();
         err3 = process2.readAllStandardOutput();
 
@@ -121,9 +117,9 @@ void xmkeys::on_applyButton_clicked()
        qDebug() << "xmodmap -e " << err2.remove(QRegExp("[\\n\\t\\r]"));
        qDebug() << "xmodmap -e " << err3.remove(QRegExp("[\\n\\t\\r]"));
 
-       QProcess::execute("xmodmap -e \"keycode " + modkey1 + " = Pointer_Button1\"");
-       QProcess::execute("xmodmap -e \"keycode " + modkey2 + " = Pointer_Button2\"");
-       QProcess::execute("xmodmap -e \"keycode " + modkey3 + " = Pointer_Button3\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey1 + " = Pointer_Button1 Pointer_Button1 Pointer_Button1\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey2 + " = Pointer_Button2 Pointer_Button2 Pointer_Button2\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey3 + " = Pointer_Button3 Pointer_Button3 Pointer_Button3\"");
     }
     else if (result == 0)
     {
