@@ -25,12 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        xmkeys.cpp
+        xmkeys.cpp \
+    xmkeys_advanced.cpp
 
 HEADERS += \
-        xmkeys.h
+        xmkeys.h \
+    xmkeys_advanced.h
 
 FORMS += \
-        xmkeys.ui
+        xmkeys.ui \
+    xmkeys_advanced.ui
 
 include(vendor/vendor.pri)

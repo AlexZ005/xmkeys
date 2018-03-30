@@ -2,6 +2,7 @@
 #define XMKEYS_H
 
 #include <QMainWindow>
+#include "xmkeys_advanced.h"
 
 extern volatile int active;
 extern QString err;
@@ -38,6 +39,10 @@ private slots:
     void on_rightMouseKey_clicked();
 
     void on_activationComboBox_activated(const QString &arg1);
+
+    void on_advancedButton_clicked();
+
+    void advancedButtonClicked();
 
 private:
     Ui::xmkeys *ui;

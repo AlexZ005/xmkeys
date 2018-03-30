@@ -36,7 +36,7 @@
       </rect>
      </property>
      <property name="currentText">
-      <string>Alt+Q</string>
+      <string>CapsLock</string>
      </property>
      <item>
       <property name="text">
@@ -193,6 +193,19 @@
      <string>&amp;Close</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="advancedButton">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>240</y>
+      <width>83</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Advanced</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -200,7 +213,7 @@
      <x>0</x>
      <y>0</y>
      <width>279</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -1,5 +1,11 @@
 #include "xmkeys.h"
 #include "ui_xmkeys.h"
+#include <iostream>
+#include <string>
+#include <regex>
+
+#include "xmkeys_advanced.h"
+//#include <QApplication>
 
 #include <QProcess>
 #include <QDir>
@@ -8,6 +14,8 @@
 #include <QKeyEvent>
 
 #include <QCloseEvent>
+
+
 
 volatile int active;
 QString err;
@@ -38,6 +46,17 @@ xmkeys::xmkeys(QWidget *parent) :
     ui(new Ui::xmkeys)
 {
     ui->setupUi(this);
+    connect(ui->advancedButton, SIGNAL(clicked()), this, SLOT(advancedButtonClicked()));
+
+}
+
+void xmkeys::advancedButtonClicked()
+{
+    qDebug() << "tset";
+    //    exampleDialog->show();
+        xmkeys_advanced w;
+        w.show();
+        w.exec();
 }
 
 xmkeys::~xmkeys()
@@ -92,7 +111,6 @@ void xmkeys::on_applyButton_clicked()
 
 
         QProcess process2;
-        QProcess process2h;
         modkey1 = ui->leftMouseKey->text();
         qDebug() << modkey1;
 
@@ -174,6 +192,33 @@ void xmkeys::on_leftMouseKey_clicked()
 {
     keyCode();
     ui->leftMouseKey->setText(err);
+
+    QProcess process3;
+    modkey1 = ui->leftMouseKey->text();
+
+
+    process3.start("sh", QStringList() << "-c" << "xmodmap -pke | grep \" " + modkey1 + " \"");
+    process3.waitForFinished();
+    err1 = process3.readAllStandardOutput();
+
+//    std::string str(err1);
+//    std::regex r("^keycode (\\d)\\d"); // entire match will be 2 numbers
+//    std::smatch m;
+//    std::regex_search(str, m, r);
+//    for(auto v: m) std::cout << v << std::endl;
+
+
+    QRegularExpression re("(\\w+)");
+    QRegularExpressionMatchIterator i = re.globalMatch(err1);
+    QStringList words;
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        QString word = match.captured(1);
+        words << word;
+        qDebug() << "matched " << word;
+    }
+//    qDebug() << matched.captured(0);
+  //  ui->leftMouseKey->setText(matched.captured(2));
 }
 
 
@@ -199,4 +244,10 @@ void xmkeys::on_activationComboBox_activated(const QString &arg1)
         tr("Maping"),
         tr("CapsLock not yet implemented.") );
 
+}
+
+void xmkeys::on_advancedButton_clicked()
+{
+//    xmkeys_advanced w;
+//    w.show();
 }
