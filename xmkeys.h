@@ -2,7 +2,6 @@
 #define XMKEYS_H
 
 #include <QMainWindow>
-#include "xmkeys_advanced.h"
 
 extern volatile int active;
 extern QString err;
