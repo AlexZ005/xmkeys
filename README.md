@@ -15,7 +15,6 @@ To compile:
 1. Open the project folder with Qt Creator and compile xmkeys binary. 
 2. Compile modified xev: gcc xev.c -o xev -lX11
 2.1. Place compiled xev to the build path.
-3. Place xmodmapgrep.ssh file in the build path.
 
 ### Prerequisites
 
