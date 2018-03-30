@@ -18,20 +18,29 @@ xmkeys_advanced::xmkeys_advanced(QWidget *parent) :
     process3.waitForFinished();
     adverr = process3.readAllStandardOutput();
 
-    QVBoxLayout * lay = new QVBoxLayout(this);
+    QGridLayout * lay = new QGridLayout(this);
     QRegularExpression re("(\\w+)");
     QRegularExpressionMatchIterator i = re.globalMatch(adverr);
     QStringList words;
+                int row = 0;
+                int col =0;
     while (i.hasNext()) {
+//        for(int bi=0;;bi++)
+        {
+
         QRegularExpressionMatch match = i.next();
         QString word = match.captured(1);
         words << word;
+        if (word == "keycode")
+        { qDebug() << "CODE ACCETER"; row++; col=0; }
         qDebug() << "matched " << word;
         QPushButton* panelButton = new QPushButton();
         panelButton->setText(word);
         panelButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 //            ui.PanelButtonGridLayout->addWidget(panelButton,i,j);
-        lay->addWidget(panelButton);
+        lay->addWidget(panelButton,row,col);
+        col++;
+        }
     }
 
     ui->scrollAreaWidgetContents->setLayout(lay);
