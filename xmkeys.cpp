@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
-
+#include <QStandardItemModel>
 #include "xmkeys_advanced.h"
 //#include <QApplication>
 
@@ -15,6 +15,8 @@
 
 #include <QCloseEvent>
 
+#include <QFile>
+
 
 
 volatile int active;
@@ -25,7 +27,7 @@ QString err3;
 QString modkey1;
 QString modkey2;
 QString modkey3;
-
+QString adverr;
 
 QString keyCode()
 {
@@ -53,10 +55,78 @@ xmkeys::xmkeys(QWidget *parent) :
 void xmkeys::advancedButtonClicked()
 {
     qDebug() << "tset";
-    //    exampleDialog->show();
-        xmkeys_advanced w;
-        w.show();
-        w.exec();
+//    //    exampleDialog->show();
+//        xmkeys_advanced w;
+////        w.show();
+//        w.exec();
+
+
+    QStandardItemModel *model=new QStandardItemModel();
+
+
+    QProcess process3;
+    process3.start("sh", QStringList() << "-c" << "xmodmap -pke | grep \" " + modkey1 + " \"");
+    process3.waitForFinished();
+    adverr = process3.readAllStandardOutput();
+
+    QRegularExpression re("(\\w+)");
+    QRegularExpressionMatchIterator i = re.globalMatch(adverr);
+    QStringList words;
+                int row = 0;
+                int col =0;
+    while (i.hasNext()) {
+//        for(int bi=0;;bi++)
+        {
+        QStandardItem *newItem = 0;
+        QRegularExpressionMatch match = i.next();
+        QString word = match.captured(1);
+        words << word;
+        if (word == "keycode")
+        { qDebug() << "CODE ACCETER"; row++; col=0; }
+        qDebug() << "matched " << word;
+        //QPushButton* panelButton = new QPushButton();
+//        panelButton->setText(word);
+//        panelButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//            ui.PanelButtonGridLayout->addWidget(panelButton,i,j);
+        newItem = new QStandardItem(word);
+        model->setItem(row, col, newItem);
+        col++;
+        }
+    }
+
+
+//    QFile file(":/grades.txt");
+//    if (file.open(QFile::ReadOnly)) {
+//        QString line = file.readLine(200);
+//        QStringList list = line.simplified().split(',');
+////        model->setHorizontalHeaderLabels(list);
+
+//        int row = 0;
+//        QStandardItem *newItem = 0;
+//        while (file.canReadLine()) {
+//            line = file.readLine(200);
+//            if (!line.startsWith('#') && line.contains(',')) {
+//                list = line.simplified().split(',');
+//                for (int col = 0; col < list.length(); ++col){
+//                    newItem = new QStandardItem(list.at(col));
+//                    model->setItem(row, col, newItem);
+//                }
+//                ++row;
+//            }
+//        }
+//    }
+//    file.close();
+
+
+
+    xmkeys_advanced *tableView = new xmkeys_advanced(model);
+
+    tableView->setWindowTitle(QObject::tr("Frozen Column Example"));
+    tableView->resize(560, 680);
+    tableView->show();
+   // return app.exec();
+
+
 }
 
 xmkeys::~xmkeys()

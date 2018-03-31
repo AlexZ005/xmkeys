@@ -33,7 +33,7 @@ HEADERS += \
     xmkeys_advanced.h
 
 FORMS += \
-        xmkeys.ui \
-    xmkeys_advanced.ui
+        xmkeys.ui
 
 include(vendor/vendor.pri)
+
