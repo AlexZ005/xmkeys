@@ -60,18 +60,18 @@ xmkeys_advanced::xmkeys_advanced(QAbstractItemModel * model)
       setModel(model);
       frozenTableView = new QTableView(this);
 
-//      init();
+      init();
 
       //connect the headers and scrollbars of both tableviews together
-//      connect(horizontalHeader(),&QHeaderView::sectionResized, this,
-//              &FreezeTableWidget::updateSectionWidth);
-//      connect(verticalHeader(),&QHeaderView::sectionResized, this,
-//              &FreezeTableWidget::updateSectionHeight);
+      connect(horizontalHeader(),&QHeaderView::sectionResized, this,
+              &xmkeys_advanced::updateSectionWidth);
+      connect(verticalHeader(),&QHeaderView::sectionResized, this,
+              &xmkeys_advanced::updateSectionHeight);
 
-//      connect(frozenTableView->verticalScrollBar(), &QAbstractSlider::valueChanged,
-//              verticalScrollBar(), &QAbstractSlider::setValue);
-//      connect(verticalScrollBar(), &QAbstractSlider::valueChanged,
-//              frozenTableView->verticalScrollBar(), &QAbstractSlider::setValue);
+      connect(frozenTableView->verticalScrollBar(), &QAbstractSlider::valueChanged,
+              verticalScrollBar(), &QAbstractSlider::setValue);
+      connect(verticalScrollBar(), &QAbstractSlider::valueChanged,
+              frozenTableView->verticalScrollBar(), &QAbstractSlider::setValue);
 
 }
 
@@ -98,11 +98,11 @@ void xmkeys_advanced::init()
 
       frozenTableView->setColumnWidth(0, columnWidth(0) );
 
-//      frozenTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//      frozenTableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//      frozenTableView->show();
+      frozenTableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      frozenTableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      frozenTableView->show();
 
-//      updateFrozenTableGeometry();
+      updateFrozenTableGeometry();
 
       setHorizontalScrollMode(ScrollPerPixel);
       setVerticalScrollMode(ScrollPerPixel);
