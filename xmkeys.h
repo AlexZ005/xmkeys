@@ -25,13 +25,10 @@ public:
     ~xmkeys();
 
 public slots:
-
     void on_applyButton_clicked();
 
 private slots:
     void on_closeButton_clicked();
-
-
 
     void on_checkBox_toggled(bool checked);
 
