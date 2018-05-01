@@ -12,7 +12,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QKeyEvent>
-
+#include <QSettings>
 #include <QCloseEvent>
 
 #include <QFile>
@@ -50,7 +50,55 @@ xmkeys::xmkeys(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->advancedButton, SIGNAL(clicked()), this, SLOT(advancedButtonClicked()));
 
+    m_sSettingsFile = QDir::currentPath() + "/xmkeys.ini";
+    loadSettings();
 }
+
+
+void xmkeys::loadSettings()
+{
+ QSettings settings(m_sSettingsFile, QSettings::NativeFormat);
+ QString s_leftText = settings.value("mleft", "").toString();
+ QString s_rightText = settings.value("mright", "").toString();
+ QString s_middleText = settings.value("mmiddle", "").toString();
+ if (ui->leftMouseKey)
+ {
+  ui->leftMouseKey->setText(s_leftText);
+ }
+ if (ui->middleMouseKey)
+ {
+  ui->middleMouseKey->setText(s_middleText);
+ }
+ if (ui->rightMouseKey)
+ {
+  ui->rightMouseKey->setText(s_rightText);
+ }
+}
+
+void xmkeys::saveSettings()
+{
+ QSettings settings(m_sSettingsFile, QSettings::NativeFormat);
+ QString s_leftText = ui->leftMouseKey->text();
+ QString s_rightText = ui->rightMouseKey->text();
+ QString s_middleText = ui->middleMouseKey->text();
+ settings.setValue("mleft", s_leftText);
+ settings.setValue("mright", s_rightText);
+ settings.setValue("mmiddle", s_middleText);
+ if (ui->leftMouseKey)
+ {
+  ui->leftMouseKey->setText(s_leftText);
+ }
+ if (ui->middleMouseKey)
+ {
+  ui->middleMouseKey->setText(s_middleText);
+ }
+ if (ui->rightMouseKey)
+ {
+  ui->rightMouseKey->setText(s_rightText);
+ }
+
+}
+
 
 void xmkeys::advancedButtonClicked()
 {
@@ -131,6 +179,8 @@ void xmkeys::on_closeButton_clicked()
 
 void xmkeys::on_applyButton_clicked()
 {
+
+    saveSettings();
 
     int result = system("xkbset");
      if(result!=0) {

@@ -20,6 +20,12 @@ class xmkeys : public QMainWindow
 {
     Q_OBJECT
 
+private:
+
+    void loadSettings();
+
+    void saveSettings();
+
 public:
     explicit xmkeys(QWidget *parent = 0);
     ~xmkeys();
@@ -46,6 +52,9 @@ private slots:
 
 private:
     Ui::xmkeys *ui;
+
+    QString m_sSettingsFile;
+
 };
 
 #endif // XMKEYS_H
