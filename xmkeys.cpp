@@ -180,9 +180,9 @@ void xmkeys::on_applyButton_clicked()
        qDebug() << "xmodmap -e " << err2.remove(QRegExp("[\\n\\t\\r]"));
        qDebug() << "xmodmap -e " << err3.remove(QRegExp("[\\n\\t\\r]"));
 
-       QProcess::execute("xmodmap -e \"keycode " + modkey1 + " = Pointer_Button1 Pointer_Button1 Pointer_Button1\"");
-       QProcess::execute("xmodmap -e \"keycode " + modkey2 + " = Pointer_Button2 Pointer_Button2 Pointer_Button2\"");
-       QProcess::execute("xmodmap -e \"keycode " + modkey3 + " = Pointer_Button3 Pointer_Button3 Pointer_Button3\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey1 + " = Pointer_Button1 Pointer_Button1 Pointer_Button1 Pointer_Button1\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey2 + " = Pointer_Button2 Pointer_Button2 Pointer_Button2 Pointer_Button2\"");
+       QProcess::execute("xmodmap -e \"keycode " + modkey3 + " = Pointer_Button3 Pointer_Button3 Pointer_Button3 Pointer_Button3\"");
     }
     else if (result == 0)
     {
